@@ -1,0 +1,68 @@
+// @use "@material/drawer";
+// @use "@material/list";
+// @include drawer.core-styles;
+// @include drawer.dismissible-core-styles;
+// @include drawer.modal-core-styles;
+// @include list.deprecated-core-styles;
+html,
+body {
+  font-size: 16px;
+}
+.h-100vh {
+  height: 100vh;
+}
+.h-80vh {
+  height: 80vh;
+}
+.message_container {
+  display: flex;
+}
+.message {
+  border: 1px rgba(128, 128, 128, 0.555) solid;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 19%);
+  background-color: #2da9e9;
+  color: #fff;
+  margin: 0.2rem;
+}
+.message hr {
+  margin: 4px 2%;
+  width: 96%;
+  opacity: 0.75;
+}
+.message_info {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 7px 13px 0 10px;
+}
+.message_text {
+  padding: 3px 13px 10px 13px;
+  font-size: 14px;
+}
+.owner {
+  justify-content: flex-end;
+}
+.owner div {
+  background-color: white !important;
+  color: #788288 !important;
+}
+.delete_button {
+  color: #ff0000;
+}
+.info_button {
+  display: inline-block;
+  padding: 0.5rem;
+}
+.back_button {
+  display: inline-block;
+  padding: 0.5rem;
+}
+.h-95 {
+  height: 95%;
+}
+.h-90vh {
+  height: 90vh;
+}
+.chat_card .card-body {
+  overflow: auto;
+}
