@@ -26,10 +26,8 @@ Vue.use(
   })
 );
 
-Vue.config.productionTip = false;
+Vue.use(BootstrapVue).use(BootstrapVueIcons)
 
-Vue.use(BootstrapVue);
-Vue.use(BootstrapVueIcons);
 
 new Vue({
   router,
