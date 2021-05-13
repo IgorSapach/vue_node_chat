@@ -11,6 +11,11 @@ export default {
       message: "",
     };
   },
+  computed: {
+    user() {
+      return this.$store.getters["user"];
+    },
+  },
   methods: {
     send() {
       this.$socket.emit(

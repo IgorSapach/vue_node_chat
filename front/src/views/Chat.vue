@@ -3,12 +3,13 @@
     <b-card class="h-100vh">
       <b-row class="mb-2 h-95">
         <b-col>
-          <b-card :header="room" header-tag="header" class="h-90vh chat_card">
+          <b-card header-tag="header" class="h-90vh chat_card">
             <template #header>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="back_button" @click="goBack">
                   <b-icon icon="arrow-left" scale="2"></b-icon>
                 </div>
+                <div>{{ room }}</div>
                 <div v-b-toggle.sidebar-right class="info_button">
                   <b-icon icon="info-circle" scale="2" />
                 </div>
@@ -48,9 +49,11 @@ export default {
       this.$router.push({ name: "Home" });
     },
   },
+  created() {
+    this.$socket.emit("enteredRoom", this.user);
+  },
   beforeDestroy() {
     this.$socket.emit("leaveRoom", this.user);
-    this.$store.commit("clearData");
   },
 };
 </script>

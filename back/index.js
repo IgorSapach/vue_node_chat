@@ -7,29 +7,15 @@ const io = require('socket.io')(http, {
 });
 const users = require('./users')()
 const rooms = require('./rooms')()
+const auth = require('./auth-module')
 
 const m = (name, text, time, id) => ({ name, text, time, id })
 
 io.on('connection', socket => {
 
-  socket.on("login", (data, cb) => {
-    if (!data.userName) {
-      return cb('something wrong')
-    }
+  //socket....   to connections.js
 
-    if (users.users.length > 0) {
-      const userIsExist = users.users.find(user => user.name.toUpperCase() === data.userName.toUpperCase())
-      if (userIsExist) return cb('This name is already exist')
-    }
-    users.add({
-      id: socket.id,
-      name: data.userName,
-      room: ''
-    })
-
-    cb({ userId: socket.id })
-    socket.emit('rooms', rooms.get())
-  })
+  auth(socket)
 
   socket.on('createMessage', (data, cb) => {
     if (!data.text) {
@@ -71,13 +57,20 @@ io.on('connection', socket => {
       if (result) {
         socket.join(result.room)
         cb(result)
-        socket.emit("newMessage", m('system', `welcome ${result.name}`, new Date))
-        updateUsers(result.room, users.getByRoom(result.room))
-        socket.broadcast.to(result.room).emit('newMessage', m('system', `user ${result.name} enter`, new Date))
       }
     }
     cb('something wrong')
   })
+
+  socket.on('enteredRoom', (user) => {
+    const currentUser = users.get(user.id)
+    if (currentUser) {
+      updateUsers(currentUser.room, users.getByRoom(currentUser.room))
+      socket.broadcast.to(currentUser.room).emit('newMessage', m('system', `user ${currentUser.name} enter`, new Date))
+      socket.emit("newMessage", m('system', `welcome ${currentUser.name}`, new Date))
+    }
+  })
+
   socket.on('leaveRoom', (data, cb) => {
     if (data) {
       const user = users.get(data.id)
@@ -89,12 +82,13 @@ io.on('connection', socket => {
         users.setRoom(data.id, '')
       }
     }
+    socket.emit('rooms', rooms.get())
   })
   socket.on('deleteRoom', (roomName, cb) => {
     if (!roomName) {
       return cb("something went wrong")
     }
-    if (users.getByRoom(roomName).length !== 0) {
+    if (users.getByRoom(roomName).length !== 0) {//add controller user+room
       return cb('Room is not empty')
     }
     rooms.remove(roomName)
@@ -103,7 +97,5 @@ io.on('connection', socket => {
   function updateUsers(room, users) {
     io.to(room).emit("updateUsers", users)
   }
-
 })
-
 http.listen(process.env.PORT || 3000, () => { console.log(`listening ${process.env.PORT || 3000}`) })

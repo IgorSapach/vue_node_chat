@@ -36,11 +36,12 @@
 export default {
   props: {
     showDeleteIcons: { type: Boolean, required: true },
+    rooms: { type: Array, required: true },
   },
   computed: {
-    rooms() {
-      return this.$store.getters["rooms"];
-    },
+    // rooms() {
+    //   return this.$store.getters["rooms"];
+    // },
     userId() {
       return this.$store.getters["user"].id;
     },

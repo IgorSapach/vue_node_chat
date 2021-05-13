@@ -14,20 +14,21 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 const socketConnection = SocketIO("http://localhost:3000");
 
+// const socketConnection = SocketIO("https://node-chat-service.herokuapp.com");// to env
+
 Vue.use(
   new VueSocketIO({
     debug: true,
     connection: socketConnection,
-    vuex: {
-      store,
-      actionPrefix: "SOCKET_",
-      mutationPrefix: "SOCKET_",
-    },
+    // vuex: {
+    //   store,
+    //   actionPrefix: "SOCKET_",
+    //   mutationPrefix: "SOCKET_",
+    // },
   })
 );
 
-Vue.use(BootstrapVue).use(BootstrapVueIcons)
-
+Vue.use(BootstrapVue).use(BootstrapVueIcons);
 
 new Vue({
   router,
