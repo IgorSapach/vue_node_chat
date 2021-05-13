@@ -46,6 +46,7 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.$socket.emit("login", this.form, (data) => {
+        console.log(data);
         if (typeof data === "string") {
           this.$bvToast.toast(`${data}`, {
             title: `Error`,

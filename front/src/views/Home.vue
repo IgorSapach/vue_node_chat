@@ -6,7 +6,7 @@
         <b-card title="Сhat room list" class="mb-2">
           <Buttons @setShowDeleteIcons="showDeleteIcons = !showDeleteIcons" />
           <b-row class="d-flex justify-content-center">
-            <RoomList :showDeleteIcons="showDeleteIcons" />
+            <RoomList :showDeleteIcons="showDeleteIcons" :rooms="rooms" />
           </b-row>
         </b-card>
       </b-col>
@@ -23,12 +23,18 @@ export default {
   data() {
     return {
       showDeleteIcons: false,
+      rooms: [],
     };
   },
   components: {
     AddingRoomModal,
     RoomList,
     Buttons,
+  },
+  sockets: {
+    rooms: function (data) {
+      this.rooms = data;
+    },
   },
 };
 </script>

@@ -14,9 +14,14 @@
 </template>
 <script>
 export default {
-  computed: {
-    users() {
-      return this.$store.getters["users"];
+  data() {
+    return {
+      users: [],
+    };
+  },
+  sockets: {
+    updateUsers: function (users) {
+      this.users = users;
     },
   },
 };
